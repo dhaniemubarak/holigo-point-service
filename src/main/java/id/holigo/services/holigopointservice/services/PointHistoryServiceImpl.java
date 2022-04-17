@@ -39,4 +39,14 @@ public class PointHistoryServiceImpl implements PointHistoryService {
         return pointHistoryPaginate;
     }
 
+    @Override
+    public void createNewHistory(Long userId, Integer point, Integer credit, Integer debit, String indexNote, String noteValue) {
+        PointHistory pointHistory = new PointHistory();
+        pointHistory.setPoint(point);
+        pointHistory.setCredit(credit);
+        pointHistory.setDebit(debit);
+        pointHistory.setUserId(userId);
+        pointHistoryRepository.save(pointHistory);
+    }
+
 }

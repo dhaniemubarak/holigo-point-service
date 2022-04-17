@@ -8,16 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -42,11 +40,8 @@ public class PointHistory {
 
     private String informationValue;
 
-    @Column(length = 36, columnDefinition = "varchar(36)", updatable = true, nullable = true)
+    @Column(length = 36, columnDefinition = "varchar(36)")
     private String transactionId;
-
-    @Column(length = 36, columnDefinition = "varchar(36)", updatable = true, nullable = true)
-    private String paymentId;
 
     @CreationTimestamp
     @Column(updatable = false)
