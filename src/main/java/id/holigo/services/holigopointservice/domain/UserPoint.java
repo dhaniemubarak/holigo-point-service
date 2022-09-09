@@ -27,7 +27,6 @@ public class UserPoint {
     private Integer point;
 
     @CreationTimestamp
-    @Column(updatable = false)
     private Timestamp createdAt;
 
     @UpdateTimestamp
