@@ -19,13 +19,13 @@ public class PointDto implements Serializable {
     private Boolean isValid = false;
 
     @Builder.Default
-    private BigDecimal deposit = BigDecimal.ZERO;
+    private Integer point = 0;
 
     @Builder.Default
-    private BigDecimal creditAmount = BigDecimal.ZERO;
+    private Integer creditAmount = 0;
 
     @Builder.Default
-    private BigDecimal debitAmount = BigDecimal.ZERO;
+    private Integer debitAmount = 0;
 
     private UUID transactionId;
 
