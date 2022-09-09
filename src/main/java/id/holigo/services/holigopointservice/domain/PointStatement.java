@@ -19,7 +19,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class PointHistory {
+public class PointStatement {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -40,8 +40,17 @@ public class PointHistory {
 
     private String informationValue;
 
-    @Column(length = 36, columnDefinition = "varchar(36)")
-    private String transactionId;
+    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID transactionId;
+
+    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID paymentId;
+
+    private String transactionType;
+
+    private String invoiceNumber;
 
     @CreationTimestamp
     @Column(updatable = false)

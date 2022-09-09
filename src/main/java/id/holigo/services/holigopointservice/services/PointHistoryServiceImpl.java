@@ -2,51 +2,51 @@ package id.holigo.services.holigopointservice.services;
 
 import java.util.stream.Collectors;
 
+import id.holigo.services.holigopointservice.domain.PointStatement;
+import id.holigo.services.holigopointservice.web.mappers.PointStatementMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import id.holigo.services.holigopointservice.domain.PointHistory;
-import id.holigo.services.holigopointservice.repositories.PointHistoryRepository;
-import id.holigo.services.holigopointservice.web.mappers.PointHistoryMapper;
-import id.holigo.services.holigopointservice.web.model.PointHistoryPaginate;
+import id.holigo.services.holigopointservice.repositories.PointStatementRepository;
+import id.holigo.services.holigopointservice.web.model.PointStatementPaginate;
 
 @Service
 public class PointHistoryServiceImpl implements PointHistoryService {
 
     @Autowired
-    private PointHistoryRepository pointHistoryRepository;
+    private PointStatementRepository pointStatementRepository;
 
     @Autowired
-    private PointHistoryMapper pointHistoryMapper;
+    private PointStatementMapper pointStatementMapper;
 
     @Override
-    public PointHistoryPaginate listPointHistories(Long userId, PageRequest pageRequest) {
+    public PointStatementPaginate listPointHistories(Long userId, PageRequest pageRequest) {
 
-        PointHistoryPaginate pointHistoryPaginate;
-        Page<PointHistory> pointHistoryPage;
+        PointStatementPaginate pointStatementPaginate;
+        Page<PointStatement> pointHistoryPage;
 
-        pointHistoryPage = pointHistoryRepository.findAllByUserId(userId, pageRequest);
+        pointHistoryPage = pointStatementRepository.findAllByUserId(userId, pageRequest);
 
-        pointHistoryPaginate = new PointHistoryPaginate(
-                pointHistoryPage.getContent().stream().map(pointHistoryMapper::pointHistoryToPointHistoryDto)
+        pointStatementPaginate = new PointStatementPaginate(
+                pointHistoryPage.getContent().stream().map(pointStatementMapper::pointStatementToPointStatementDto)
                         .collect(Collectors.toList()),
                 PageRequest.of(pointHistoryPage.getPageable().getPageNumber(),
                         pointHistoryPage.getPageable().getPageSize()),
                 pointHistoryPage.getTotalElements());
 
-        return pointHistoryPaginate;
+        return pointStatementPaginate;
     }
 
     @Override
     public void createNewHistory(Long userId, Integer point, Integer credit, Integer debit, String indexNote, String noteValue) {
-        PointHistory pointHistory = new PointHistory();
-        pointHistory.setPoint(point);
-        pointHistory.setCredit(credit);
-        pointHistory.setDebit(debit);
-        pointHistory.setUserId(userId);
-        pointHistoryRepository.save(pointHistory);
+        PointStatement pointStatement = new PointStatement();
+        pointStatement.setPoint(point);
+        pointStatement.setCredit(credit);
+        pointStatement.setDebit(debit);
+        pointStatement.setUserId(userId);
+        pointStatementRepository.save(pointStatement);
     }
 
 }

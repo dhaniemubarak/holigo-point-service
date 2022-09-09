@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import id.holigo.services.holigopointservice.domain.PointHistory;
+import id.holigo.services.holigopointservice.domain.PointStatement;
 
-public interface PointHistoryRepository extends JpaRepository<PointHistory, UUID> {
-    Page<PointHistory> findAllByUserId(Long userId, Pageable pageable);
+public interface PointStatementRepository extends JpaRepository<PointStatement, UUID> {
+    Page<PointStatement> findAllByUserId(Long userId, Pageable pageable);
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PointHistoryDto implements Serializable {
+public class PointStatementDto implements Serializable {
 
     private UUID id;
 
