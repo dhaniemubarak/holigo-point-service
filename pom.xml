@@ -11,7 +11,7 @@
 	<artifactId>holigo-point-service</artifactId>
 	<version>1.0.0</version>
 	<name>holigo-point-service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Point service</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.1</spring-cloud.version>
@@ -137,6 +137,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${project.parent.version}</version>
 				<configuration>
 					<excludes>
 						<exclude>
