@@ -36,7 +36,6 @@ public class PointListener {
 
     @JmsListener(destination = JmsConfig.CREDIT_POINT)
     public void listenForCredit(@Payload PointDto pointDto, @Headers MessageHeaders headers, Message message) throws JMSException {
-        log.info("listenForCredit is running...");
         try {
             PointDto credit = userPointService.credit(pointDto);
             jmsTemplate.convertAndSend(message.getJMSReplyTo(), credit);

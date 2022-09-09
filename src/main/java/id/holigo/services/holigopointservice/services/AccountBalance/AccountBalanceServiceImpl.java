@@ -31,7 +31,6 @@ public class AccountBalanceServiceImpl implements AccountBalanceService {
 
     @Override
     public PointDto createAccountStatement(PointDto pointDto) throws JMSException, JsonProcessingException {
-        log.info("createAccountStatement is running ....");
         Message received = jmsTemplate.sendAndReceive(JmsConfig.CREATE_POINT_ACCOUNT_STATEMENT, session -> {
             Message message;
             try {

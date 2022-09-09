@@ -30,7 +30,6 @@ public class PointController {
 
     @PostMapping("/api/v1/point/credit")
     public ResponseEntity<PointDto> credit(@RequestBody PointDto pointDto) throws JMSException, JsonProcessingException {
-        log.info("Credit is running...");
         return new ResponseEntity<>(pointService.credit(pointDto), HttpStatus.CREATED);
     }
 }
