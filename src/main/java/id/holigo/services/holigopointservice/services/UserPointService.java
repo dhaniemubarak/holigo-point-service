@@ -1,10 +1,14 @@
 package id.holigo.services.holigopointservice.services;
 
+import id.holigo.services.common.model.PointDto;
+
 import java.util.UUID;
 
 public interface UserPointService {
 
-    boolean credit(Long userId, Integer point, UUID transactionId, String indexNote, String noteValue);
+    void createUserPoint(Long userId);
 
-    boolean debit(Long userId, Integer point, UUID transactionId, String indexNote, String noteValue);
+    PointDto credit(PointDto depositDto) throws Exception;
+
+    PointDto debit(PointDto depositDto) throws Exception;
 }
