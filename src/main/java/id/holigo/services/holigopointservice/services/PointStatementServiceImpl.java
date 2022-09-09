@@ -13,7 +13,7 @@ import id.holigo.services.holigopointservice.repositories.PointStatementReposito
 import id.holigo.services.holigopointservice.web.model.PointStatementPaginate;
 
 @Service
-public class PointHistoryServiceImpl implements PointHistoryService {
+public class PointStatementServiceImpl implements PointStatementService {
 
     @Autowired
     private PointStatementRepository pointStatementRepository;
@@ -22,25 +22,25 @@ public class PointHistoryServiceImpl implements PointHistoryService {
     private PointStatementMapper pointStatementMapper;
 
     @Override
-    public PointStatementPaginate listPointHistories(Long userId, PageRequest pageRequest) {
+    public PointStatementPaginate listPointStatements(Long userId, PageRequest pageRequest) {
 
         PointStatementPaginate pointStatementPaginate;
-        Page<PointStatement> pointHistoryPage;
+        Page<PointStatement> pointStatementPage;
 
-        pointHistoryPage = pointStatementRepository.findAllByUserId(userId, pageRequest);
+        pointStatementPage = pointStatementRepository.findAllByUserId(userId, pageRequest);
 
         pointStatementPaginate = new PointStatementPaginate(
-                pointHistoryPage.getContent().stream().map(pointStatementMapper::pointStatementToPointStatementDto)
+                pointStatementPage.getContent().stream().map(pointStatementMapper::pointStatementToPointStatementDto)
                         .collect(Collectors.toList()),
-                PageRequest.of(pointHistoryPage.getPageable().getPageNumber(),
-                        pointHistoryPage.getPageable().getPageSize()),
-                pointHistoryPage.getTotalElements());
+                PageRequest.of(pointStatementPage.getPageable().getPageNumber(),
+                        pointStatementPage.getPageable().getPageSize()),
+                pointStatementPage.getTotalElements());
 
         return pointStatementPaginate;
     }
 
     @Override
-    public void createNewHistory(Long userId, Integer point, Integer credit, Integer debit, String indexNote, String noteValue) {
+    public void createNewStatement(Long userId, Integer point, Integer credit, Integer debit, String indexNote, String noteValue) {
         PointStatement pointStatement = new PointStatement();
         pointStatement.setPoint(point);
         pointStatement.setCredit(credit);

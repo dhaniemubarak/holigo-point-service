@@ -14,7 +14,7 @@ public class UserPointServiceImpl implements UserPointService {
 
     private UserPointRepository userPointRepository;
 
-    private PointHistoryService pointHistoryService;
+    private PointStatementService pointStatementService;
 
 
     @Autowired
@@ -23,8 +23,8 @@ public class UserPointServiceImpl implements UserPointService {
     }
 
     @Autowired
-    public void setPointHistoryService(PointHistoryService pointHistoryService) {
-        this.pointHistoryService = pointHistoryService;
+    public void setPointStatementService(PointStatementService pointStatementService) {
+        this.pointStatementService = pointStatementService;
     }
 
     @Transactional
@@ -38,7 +38,7 @@ public class UserPointServiceImpl implements UserPointService {
             Integer newPoint = currentPoint + point;
             userPoint.setPoint(newPoint);
             UserPoint savedUserPoint = userPointRepository.save(userPoint);
-            pointHistoryService.createNewHistory(userId, currentPoint, point, 0, indexNote, noteValue);
+            pointStatementService.createNewStatement(userId, currentPoint, point, 0, indexNote, noteValue);
             isCredit = true;
         }
         return isCredit;
@@ -56,7 +56,7 @@ public class UserPointServiceImpl implements UserPointService {
                 Integer newPoint = currentPoint - point;
                 userPoint.setPoint(newPoint);
                 UserPoint savedUserPoint = userPointRepository.save(userPoint);
-                pointHistoryService.createNewHistory(userId, currentPoint, point, 0, indexNote, noteValue);
+                pointStatementService.createNewStatement(userId, currentPoint, point, 0, indexNote, noteValue);
                 isDebit = true;
             }
         }

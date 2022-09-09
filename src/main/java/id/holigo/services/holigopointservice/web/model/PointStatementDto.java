@@ -23,9 +23,9 @@ public class PointStatementDto implements Serializable {
 
     private String information;
 
-    private String transactionId;
+    private UUID transactionId;
 
-    private String paymentId;
+    private UUID paymentId;
 
     private Timestamp createdAt;
 }
