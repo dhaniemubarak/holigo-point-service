@@ -12,6 +12,6 @@ public interface UserPointRepository extends JpaRepository<UserPoint, Long> {
     @Modifying(flushAutomatically = true)
     @Query("UPDATE UserPoint u SET u.point=:newPoint WHERE u.userId=:userId AND u.point=:currentPoint")
     int updatePoint(@Param("userId") Long userId,
-                    @Param("currentDeposit") Integer currentPoint,
+                    @Param("currentPoint") Integer currentPoint,
                     @Param("newPoint") Integer newPoint);
 }

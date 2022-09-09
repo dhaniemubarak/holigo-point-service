@@ -15,6 +15,8 @@ public class JmsConfig {
 
     public static final String CREATE_ACCOUNT_STATEMENT = "create-account-statement";
 
+    public static final String CREATE_POINT_ACCOUNT_STATEMENT = "create-point-account-statement";
+
     @Bean
     public MessageConverter jacksonJmsMessageConverter(ObjectMapper objectMapper) {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();

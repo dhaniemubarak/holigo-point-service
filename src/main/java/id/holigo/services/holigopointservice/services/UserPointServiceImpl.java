@@ -4,6 +4,7 @@ import id.holigo.services.common.model.PointDto;
 import id.holigo.services.holigopointservice.domain.PointStatement;
 import id.holigo.services.holigopointservice.domain.UserPoint;
 import id.holigo.services.holigopointservice.repositories.UserPointRepository;
+import id.holigo.services.holigopointservice.services.AccountBalance.AccountBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,12 @@ public class UserPointServiceImpl implements UserPointService {
 
     private PointStatementService pointStatementService;
 
+    private AccountBalanceService accountBalanceService;
+
+    @Autowired
+    public void setAccountBalanceService(AccountBalanceService accountBalanceService) {
+        this.accountBalanceService = accountBalanceService;
+    }
 
     @Autowired
     public void setUserPointRepository(UserPointRepository userPointRepository) {
@@ -40,7 +47,7 @@ public class UserPointServiceImpl implements UserPointService {
 
     @Transactional
     @Override
-    public PointDto credit(PointDto pointDto) {
+    public PointDto credit(PointDto pointDto) throws Exception {
         pointDto.setIsValid(false);
         if (pointDto.getCreditAmount() == 0) {
             return pointDto;
@@ -59,26 +66,26 @@ public class UserPointServiceImpl implements UserPointService {
         return pointDto;
     }
 
-    private void updatePoint(PointDto pointDto, UserPoint userPoint, Integer currentPoint, Integer newPoint) {
+    private void updatePoint(PointDto pointDto, UserPoint userPoint, Integer currentPoint, Integer newPoint) throws Exception {
         int isUpdate = userPointRepository.updatePoint(userPoint.getUserId(), currentPoint, newPoint);
         if (isUpdate == 0) {
             throw new RuntimeException();
         }
         PointStatement pointStatement = pointStatementService.createNewStatement(pointDto, currentPoint);
         if (pointStatement.getId() != null) {
-//            pointDto.setPoint(currentPoint);
-//            PointDto resultAccountStatement = accountBalanceService.createAccountStatement(depositDto);
-//            if (!resultAccountStatement.getIsValid()) {
-//                throw new RuntimeException("Invalid createAccountStatement");
-//            }
-//            depositDto.setIsValid(resultAccountStatement.getIsValid());
-//            depositDto.setDeposit(resultAccountStatement.getDeposit());
+            pointDto.setPoint(currentPoint);
+            PointDto resultAccountStatement = accountBalanceService.createAccountStatement(pointDto);
+            if (!resultAccountStatement.getIsValid()) {
+                throw new RuntimeException("Invalid createAccountStatement");
+            }
+            pointDto.setIsValid(resultAccountStatement.getIsValid());
+            pointDto.setPoint(resultAccountStatement.getPoint());
         }
     }
 
     @Transactional
     @Override
-    public PointDto debit(PointDto pointDto) {
+    public PointDto debit(PointDto pointDto) throws Exception {
         pointDto.setIsValid(false);
         if (pointDto.getDebitAmount() == 0) {
             return pointDto;
