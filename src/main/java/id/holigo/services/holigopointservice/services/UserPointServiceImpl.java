@@ -1,5 +1,6 @@
 package id.holigo.services.holigopointservice.services;
 
+import id.holigo.services.common.model.AccountBalanceDto;
 import id.holigo.services.common.model.PointDto;
 import id.holigo.services.holigopointservice.domain.PointStatement;
 import id.holigo.services.holigopointservice.domain.UserPoint;
@@ -43,6 +44,7 @@ public class UserPointServiceImpl implements UserPointService {
             userPointRepository.save(userDeposit);
         }
         userPointRepository.getById(userId);
+        accountBalanceService.createAccountBalance(AccountBalanceDto.builder().point(0).userId(userId).build());
     }
 
     @Transactional

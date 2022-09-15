@@ -54,4 +54,9 @@ public class PointListener {
         }
         jmsTemplate.convertAndSend(message.getJMSReplyTo(), pointDto);
     }
+
+    @JmsListener(destination = JmsConfig.CREATE_USER_POINT)
+    public void listenForCreateUserPoint(@Payload PointDto pointDto, @Headers MessageHeaders headers, Message message) {
+        userPointService.createUserPoint(pointDto.getUserId());
+    }
 }

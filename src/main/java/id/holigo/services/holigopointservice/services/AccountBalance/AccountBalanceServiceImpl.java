@@ -2,6 +2,7 @@ package id.holigo.services.holigopointservice.services.AccountBalance;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import id.holigo.services.common.model.AccountBalanceDto;
 import id.holigo.services.common.model.PointDto;
 import id.holigo.services.holigopointservice.config.JmsConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -46,5 +47,10 @@ public class AccountBalanceServiceImpl implements AccountBalanceService {
         }
         return objectMapper.readValue(received.getBody(String.class),
                 PointDto.class);
+    }
+
+    @Override
+    public void createAccountBalance(AccountBalanceDto accountBalanceDto) {
+        jmsTemplate.convertAndSend(JmsConfig.CREATE_ACCOUNT_BALANCE, accountBalanceDto);
     }
 }
